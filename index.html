@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tulipanes a Crochet</title>
+  <link rel="icon" href="./tuli.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Crimson+Pro&display=swap" rel="stylesheet">
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      background-image: url('fondo3.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+      color: #5A2A2A;
+      margin: 40px;
+      font-family: 'Crimson Pro', serif;
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3em;
+    }
+    .subtitulo {
+      text-align: center;
+      font-size: 1.3em;
+      margin-bottom: 20px;
+    }
+    .nav {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 3px;
+      text-align: center;
+      margin: 3px;
+      font-size: 1.3em;
+    }
+    .nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 1px 0 0;
+    }
+    .nav ul li {
+      display: inline-block;
+      margin: 0 15 px;
+    }
+    .nav ul li a {
+      color: #DDA0DD;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    .nav ul li a:hover {
+      color: #EE82EE;
+    }
+    .seccion {
+      margin-top: 20px;
+    }
+    .carrito {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 15px;
+      border-radius: 10px;
+      max-width: 400px;
+    }
+    .btn {
+      background-color: #A52A2A;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      margin-top: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background-color: #8B0000;
+    }
+    .producto-btn {
+      margin-left: 10px;
+    }
+    .contacto {
+      margin-top: 40px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+    }
+    .icon-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+    .icon-circle img {
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TULIPANES A CROCHET</h1>
+  <p class="subtitulo">"NO COMPRES FLORES QUE SE MARCHITEN, COMPRA FLORES ETERNAS"</p>
+  <p class="subtitulo"><strong>En la compra de dos tulipanes te llevas dos gratis</strong></p> 
+  <nav class="nav">
+    <ul class="nav ul">
+      <li class="nav ul li"><a href="Inicio.html">Inicio</a></li>
+      <li class="nav ul li"><a href="index.html">Venta</a></li>
+      <li class="nav ul li"><a href="Tex3.html">Ubicación</a></li>
+    </ul>
+  </nav>  <div class="seccion">
+    <h3>TULIPANES</h3>
+    <h4>COLORES DISPONIBLES</h4>
+    <ul>
+      <li>Rojo</li>
+      <li>Amarillo</li>
+      <li>Rosa</li>
+      <li>Azul</li>
+    </ul><h4>PRECIOS</h4>
+<p><strong>Tulipán individual $50</strong></p>
+<div>
+  <button class="btn" onclick="agregarProducto('Tulipán Rojo', 50)">Rojo</button>
+  <button class="btn" onclick="agregarProducto('Tulipán Amarillo', 50)">Amarillo</button>
+  <button class="btn" onclick="agregarProducto('Tulipán Rosa', 50)">Rosa</button>
+  <button class="btn" onclick="agregarProducto('Tulipán Azul', 50)">Azul</button>
+</div>
+
+<p><strong>Ramo de 12 piezas $150</strong></p>
+<div>
+  <button class="btn" onclick="agregarProducto('Ramo Rojo', 150)">Rojo</button>
+  <button class="btn" onclick="agregarProducto('Ramo Amarillo', 150)">Amarillo</button>
+  <button class="btn" onclick="agregarProducto('Ramo Rosa', 150)">Rosa</button>
+  <button class="btn" onclick="agregarProducto('Ramo Azul', 150)">Azul</button>
+  <button class="btn" onclick="agregarProducto('Ramo Mixto', 150)">Mixto</button>
+</div>
+
+  </div>  <div class="carrito">
+    <h3>Carrito de compras</h3>
+    <ul id="carrito-lista"></ul>
+    <p><strong>Subtotal: $<span id="subtotal">0</span></strong></p>
+    <p><strong>Envío: $<span id="envio">0</span></strong></p>
+    <p><strong>Total a pagar: $<span id="total">0</span></strong></p><div id="metodo-pago" style="margin-top: 15px;">
+  <h4>Método de pago</h4>
+  <label><input type="radio" name="pago" value="tarjeta crédito" checked> Tarjeta de Crédito</label>
+  <label><input type="radio" name="pago" value="tarjeta débito"> Tarjeta de Débito</label>
+  <label><input type="radio" name="pago" value="efectivo"> Efectivo</label>
+  <label><input type="radio" name="pago" value="stripe"> Stripe</label>
+</div>
+
+<div id="elegir-gratis" style="margin-top: 15px; display: none;">
+  <h4>Elige el color de tus tulipanes gratis</h4>
+  <select id="gratis1" class="btn">
+    <option value="Rojo">Rojo</option>
+    <option value="Amarillo">Amarillo</option>
+    <option value="Rosa">Rosa</option>
+    <option value="Azul">Azul</option>
+  </select>
+  <select id="gratis2" class="btn">
+    <option value="Rojo">Rojo</option>
+    <option value="Amarillo">Amarillo</option>
+    <option value="Rosa">Rosa</option>
+    <option value="Azul">Azul</option>
+  </select>
+</div>
+
+<button class="btn" onclick="vaciarCarrito()">Vaciar carrito</button>
+<button class="btn" onclick="pagar()">Pagar</button>
+
+  <!-- Espacio para que el contenido no quede oculto por el footer -->
+  <div style="margin-bottom: 180px;"></div>
+
+  <!-- Pie de página fijo -->
+  <footer style="background-color: rgba(255, 255, 255, 0.85); padding: 20px; text-align: center; font-size: 1.1em; width: 100%; position: fixed; bottom: 0; left: 0; z-index: 100;">
+    <h3 style="margin-bottom: 15px;">CONTÁCTANOS</h3>
+
+    <div class="contact-item" style="margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <div class="icon-circle" style="background-color: #5A5A5A; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <img src="t.png" alt="Teléfono" style="width: 20px;">
+      </div>
+      <span>9514916752</span>
+    </div>
+
+    <div class="contact-item" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <div class="icon-circle" style="background-color: #1877F2; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <img src="fa.jpeg" alt="Facebook" style="width: 20px;">
+      </div>
+      <span>"TULIPANES A CROCHET"</span>
+    </div>
+  </footer>
+  </div>  <script>
+    let carrito = [];
+    let subtotal = 0;
+
+    function agregarProducto(nombre, precio) {
+      carrito.push({ nombre, precio });
+      subtotal += precio;
+      actualizarCarrito();
+    }
+
+    function eliminarProducto(index) {
+      subtotal -= carrito[index].precio;
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function vaciarCarrito() {
+      carrito = [];
+      subtotal = 0;
+      actualizarCarrito();
+    }
+
+    function pagar() {
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+      } else {
+        const envio = subtotal >= 500 ? 0 : 200;
+        const totalFinal = subtotal + envio;
+        const metodoPago = document.querySelector('input[name="pago"]:checked').value;
+
+        if (metodoPago === 'stripe') {
+          alert("Se redirigirá al pago con Stripe (simulado). Total: $" + totalFinal);
+          // Aquí deberías redirigir a Stripe Checkout o cargar su API
+        } else {
+          let mensaje = `Gracias por tu compra.\nMétodo de pago: ${metodoPago.toUpperCase()}\n`;
+          mensaje += envio === 0
+            ? `El envío es gratis. Total a pagar: $${totalFinal}`
+            : `Se agregaron $200 de envío. Total a pagar: $${totalFinal}`;
+          alert(mensaje);
+        }
+        vaciarCarrito();
+      }
+    }
+
+    function contarTulipanesIndividuales() {
+      return carrito.filter(item =>
+        item.nombre.includes('Tulipán') && !item.nombre.includes('Ramo')
+      ).length;
+    }
+
+    function actualizarCarrito() {
+      const lista = document.getElementById('carrito-lista');
+      lista.innerHTML = '';
+
+      let productosAMostrar = [...carrito];
+      let cantidadTulipanes = contarTulipanesIndividuales();
+
+      const gratisDiv = document.getElementById('elegir-gratis');
+      if (cantidadTulipanes >= 2) {
+        gratisDiv.style.display = 'block';
+        productosAMostrar.push({ nombre: `Tulipán Gratis (${document.getElementById('gratis1')?.value || "Rojo"})`, precio: 0 });
+        productosAMostrar.push({ nombre: `Tulipán Gratis (${document.getElementById('gratis2')?.value || "Rojo"})`, precio: 0 });
+      } else {
+        gratisDiv.style.display = 'none';
+      }
+
+      productosAMostrar.forEach((item, index) => {
+        const li = document.createElement('li');
+        if (item.precio === 0 && item.nombre.startsWith('Tulipán Gratis')) {
+          li.textContent = `${item.nombre} - GRATIS`;
+        } else {
+          li.innerHTML = `${item.nombre} - $${item.precio} <button class="btn" onclick="eliminarProducto(${index})">Quitar</button>`;
+        }
+        lista.appendChild(li);
+      });
+
+      document.getElementById('subtotal').textContent = subtotal;
+      const envio = subtotal >= 500 ? 0 : 200;
+      document.getElementById('envio').textContent = envio;
+      document.getElementById('total').textContent = subtotal + envio;
+    }
+  </script></body>
+</html>
